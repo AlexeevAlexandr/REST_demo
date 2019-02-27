@@ -37,12 +37,12 @@ public class StudentController {
     @PostMapping("/student")
     public Student create(@RequestParam Map<String, String> body){
         String name = body.get("name");
-        String passwordnumber = body.get("passportnumber");
-        return studentRepository.save(new Student(name, passwordnumber));
+        String passportnumber = body.get("passportnumber");
+        return studentRepository.save(new Student(name, passportnumber));
     }
 
     @PutMapping("/student/{id}")
-    public Student update(@PathVariable String id, @RequestBody Map<String, String> body){
+    public Student update(@PathVariable String id, @RequestParam Map<String, String> body){
         Student student = studentRepository.findOne(Integer.parseInt(id));
         student.setName(body.get("name"));
         student.setPassportnumber(body.get("passportNumber"));
