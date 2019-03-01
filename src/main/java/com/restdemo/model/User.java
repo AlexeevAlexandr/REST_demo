@@ -3,31 +3,20 @@ package com.restdemo.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "students")
-public class Student {
+@Table(name = "user")
+public class User {
 
     @Id
-    @Column
-    private String username;
     @Column
     private String name;
     @Column
     private String password;
 
-    public Student(){}
+    public User(){}
 
-    public Student(String username, String name, String password) {
-        this.setUsername(username);
+    public User(String name, String password) {
         this.setName(name);
         this.setPassword(password);
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    private void setUsername(String username) {
-        this.username = username;
     }
 
     public String getName() {
