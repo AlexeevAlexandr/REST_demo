@@ -7,27 +7,27 @@ import javax.persistence.*;
 public class Student {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
-    private int id;
+    private String username;
     @Column
     private String name;
     @Column
-    private String passportnumber;
+    private String password;
 
     public Student(){}
 
-    public Student(String name, String passportnumber) {
+    public Student(String username, String name, String password) {
+        this.setUsername(username);
         this.setName(name);
-        this.setPassportnumber(passportnumber);
+        this.setPassword(password);
     }
 
-    public int getId() {
-        return id;
+    public String getUsername() {
+        return username;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getName() {
@@ -38,11 +38,11 @@ public class Student {
         this.name = name;
     }
 
-    public String getPassportnumber() {
-        return passportnumber;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassportnumber(String passportnumber) {
-        this.passportnumber = passportnumber;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

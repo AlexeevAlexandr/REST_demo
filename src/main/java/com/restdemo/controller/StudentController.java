@@ -22,37 +22,38 @@ public class StudentController {
         return studentRepository.findAll();
     }
 
-    @GetMapping("/student/{id}")
-    public Student show(@PathVariable String id){
-        return studentRepository.findOne(Integer.parseInt(id));
+    @GetMapping("/student/{username}")
+    public Student show(@PathVariable String username){
+        return studentRepository.findOne(username);
     }
 
     @PostMapping("/student/search")
     public List<Student> search(@RequestParam Map<String, String> body){
         String searchTerm = body.get("text");
-        return studentRepository.findByNameContainingOrPassportnumberContaining(searchTerm, searchTerm);
+        return studentRepository.findByNameContainingOrPasswordContaining(searchTerm, searchTerm);
     }
 
     @PostMapping("/student")
     public Student create(@RequestParam Map<String, String> body){
+        String username = body.get("username");
         String name = body.get("name");
-        String passportnumber = body.get("passportnumber");
-        return studentRepository.save(new Student(name, passportnumber));
+        String password = body.get("password");
+        return studentRepository.save(new Student(username, name, password));
     }
 
-    @PutMapping("/student/{id}")
-    public Student update(@PathVariable String id, @RequestParam Map<String, String> body){
+    @PutMapping("/student/{username}")
+    public Student update(@PathVariable String username, @RequestParam Map<String, String> body){
         String name = body.get("name");
-        String passportnumber = body.get("passportnumber");
-        Student student = studentRepository.findOne(Integer.parseInt(id));
+        String password = body.get("password");
+        Student student = studentRepository.findOne(username);
         student.setName(name);
-        student.setPassportnumber(passportnumber);
+        student.setPassword(password);
         return studentRepository.save(student);
     }
 
-    @DeleteMapping("/student/{id}")
-    public boolean delete(@PathVariable String id){
-        studentRepository.delete(Integer.parseInt(id));
+    @DeleteMapping("/student/{username}")
+    public boolean delete(@PathVariable String username){
+        studentRepository.delete(username);
         return true;
     }
 }

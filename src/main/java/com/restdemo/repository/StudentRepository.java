@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Integer> {
+public interface StudentRepository extends JpaRepository<Student, String> {
 
-    List<Student> findByNameContainingOrPassportnumberContaining(String text, String textAgain);
+    List<Student> findByNameContainingOrPasswordContaining(String text, String textAgain);
 }
