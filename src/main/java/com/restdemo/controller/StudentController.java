@@ -43,9 +43,11 @@ public class StudentController {
 
     @PutMapping("/student/{id}")
     public Student update(@PathVariable String id, @RequestParam Map<String, String> body){
+        String name = body.get("name");
+        String passportnumber = body.get("passportnumber");
         Student student = studentRepository.findOne(Integer.parseInt(id));
-        student.setName(body.get("name"));
-        student.setPassportnumber(body.get("passportNumber"));
+        student.setName(name);
+        student.setPassportnumber(passportnumber);
         return studentRepository.save(student);
     }
 
