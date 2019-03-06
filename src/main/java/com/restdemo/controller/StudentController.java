@@ -19,23 +19,29 @@ public class StudentController {
     }
 
     @GetMapping("/student")
-    public List<Student> index(){
+    public List<Student> getAllStudents(){
         return studentRepository.findAll();
     }
 
     @GetMapping("/student/{username}")
-    public Student show(@PathVariable String username){
+    public Student getStudentByUsername(@PathVariable String username){
         return studentRepository.findOne(username);
     }
 
+    @PostMapping("/student/searchByTeacher")
+    public List<Student> getStudentsByTeacher(@RequestParam Map<String, String> body){
+        String searchTerm = body.get("teacher");
+        return studentRepository.findByTeacherContaining(searchTerm);
+    }
+
     @PostMapping("/student/search")
-    public List<Student> search(@RequestParam Map<String, String> body){
+    public List<Student> searchStudentsByNameOrUsername(@RequestParam Map<String, String> body){
         String searchTerm = body.get("text");
         return studentRepository.findByNameContainingOrUsernameContaining(searchTerm, searchTerm);
     }
 
     @PostMapping("/student")
-    public Student create(@RequestParam Map<String, String> body){
+    public Student createStudent(@RequestParam Map<String, String> body){
         String username = body.get("username");
         String name = body.get("name");
         String teacher = body.get("teacher");
@@ -43,7 +49,7 @@ public class StudentController {
     }
 
     @PutMapping("/student/{username}")
-    public Student update(@PathVariable String username, @RequestParam Map<String, String> body){
+    public Student updateStudent(@PathVariable String username, @RequestParam Map<String, String> body){
         String name = body.get("name");
         String teacher = body.get("teacher");
         Student student = studentRepository.findOne(username);
@@ -53,7 +59,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/student/{username}")
-    public boolean delete(@PathVariable String username){
+    public boolean deleteStudent(@PathVariable String username){
         studentRepository.delete(username);
         return true;
     }

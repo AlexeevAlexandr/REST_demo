@@ -9,4 +9,6 @@ import java.util.List;
 public interface StudentRepository extends JpaRepository<Student, String> {
 
     List<Student> findByNameContainingOrUsernameContaining(String text, String textAgain);
+
+    List<Student> findByTeacherContaining(String text);
 }
