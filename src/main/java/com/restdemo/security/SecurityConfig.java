@@ -1,7 +1,7 @@
 package com.restdemo.security;
 
-import com.restdemo.model.User;
-import com.restdemo.repository.UserRepository;
+import com.restdemo.model.Teacher;
+import com.restdemo.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,19 +15,19 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserRepository userRepository;
+    private final TeacherRepository teacherRepository;
 
     @Autowired
-    public SecurityConfig(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public SecurityConfig(TeacherRepository teacherRepository) {
+        this.teacherRepository = teacherRepository;
     }
 
     @Autowired
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(name -> {
-            User user = userRepository.findOne(name);
-            if (user != null) {
-                return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(),
+            Teacher teacher = teacherRepository.findOne(name);
+            if (teacher != null) {
+                return new org.springframework.security.core.userdetails.User(teacher.getName(), teacher.getPassword(),
                         true, true, true, true, AuthorityUtils.createAuthorityList("USER"));
             } else {
                 throw new UsernameNotFoundException("Could not find the user '" + name + "'");

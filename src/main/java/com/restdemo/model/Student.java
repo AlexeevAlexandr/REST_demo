@@ -12,14 +12,14 @@ public class Student {
     @Column
     private String name;
     @Column
-    private String password;
+    private String teacher;
 
     public Student(){}
 
-    public Student(String username, String name, String password) {
+    public Student(String username, String name, String teacher) {
         this.setUsername(username);
         this.setName(name);
-        this.setPassword(password);
+        this.setTeacher(teacher);
     }
 
     public String getUsername() {
@@ -38,11 +38,11 @@ public class Student {
         this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public String getTeacher() {
+        return teacher;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setTeacher(String teacher) {
+        this.teacher = teacher;
     }
 }

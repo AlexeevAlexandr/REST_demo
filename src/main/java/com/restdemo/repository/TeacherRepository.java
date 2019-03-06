@@ -1,9 +1,9 @@
 package com.restdemo.repository;
 
-import com.restdemo.model.User;
+import com.restdemo.model.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String> {
+public interface TeacherRepository extends JpaRepository<Teacher, String> {
 }

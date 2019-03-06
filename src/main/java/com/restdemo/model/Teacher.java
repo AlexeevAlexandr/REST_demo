@@ -3,8 +3,8 @@ package com.restdemo.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "teachers")
+public class Teacher {
 
     @Id
     @Column
@@ -12,9 +12,9 @@ public class User {
     @Column
     private String password;
 
-    public User(){}
+    public Teacher(){}
 
-    public User(String name, String password) {
+    public Teacher(String name, String password) {
         this.setName(name);
         this.setPassword(password);
     }
