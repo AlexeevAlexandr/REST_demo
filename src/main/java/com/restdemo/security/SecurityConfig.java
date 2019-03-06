@@ -1,7 +1,6 @@
-package com.restdemo.service;
+package com.restdemo.security;
 
 import com.restdemo.model.User;
-import com.restdemo.repository.StudentRepository;
 import com.restdemo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
