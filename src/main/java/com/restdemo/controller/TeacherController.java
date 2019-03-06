@@ -29,15 +29,15 @@ public class TeacherController {
     }
 
     @PostMapping("/teacher")
-    public Teacher createTeacher(@RequestParam Map<String, String> body){
-        String name = body.get("name");
-        String password = body.get("password");
+    public Teacher createTeacher(@RequestParam Map<String, String> param){
+        String name = param.get("name");
+        String password = param.get("password");
         return teacherRepository.save(new Teacher(name, password));
     }
 
     @PutMapping("/teacher/{name}")
-    public Teacher updateTeacher(@PathVariable String name, @RequestParam Map<String, String> body){
-        String password = body.get("password");
+    public Teacher updateTeacher(@PathVariable String name, @RequestParam Map<String, String> param){
+        String password = param.get("password");
         Teacher teacher = teacherRepository.findOne(name);
         teacher.setPassword(password);
         return teacherRepository.save(teacher);

@@ -29,29 +29,29 @@ public class StudentController {
     }
 
     @PostMapping("/student/searchByTeacher")
-    public List<Student> getStudentsByTeacher(@RequestParam Map<String, String> body){
-        String searchTerm = body.get("teacher");
+    public List<Student> getStudentsByTeacher(@RequestParam Map<String, String> param){
+        String searchTerm = param.get("teacher");
         return studentRepository.findByTeacherContaining(searchTerm);
     }
 
     @PostMapping("/student/search")
-    public List<Student> searchStudentsByNameOrUsername(@RequestParam Map<String, String> body){
-        String searchTerm = body.get("text");
+    public List<Student> searchStudentsByNameOrUsername(@RequestParam Map<String, String> param){
+        String searchTerm = param.get("text");
         return studentRepository.findByNameContainingOrUsernameContaining(searchTerm, searchTerm);
     }
 
     @PostMapping("/student")
-    public Student createStudent(@RequestParam Map<String, String> body){
-        String username = body.get("username");
-        String name = body.get("name");
-        String teacher = body.get("teacher");
+    public Student createStudent(@RequestParam Map<String, String> param){
+        String username = param.get("username");
+        String name = param.get("name");
+        String teacher = param.get("teacher");
         return studentRepository.save(new Student(username, name, teacher));
     }
 
     @PutMapping("/student/{username}")
-    public Student updateStudent(@PathVariable String username, @RequestParam Map<String, String> body){
-        String name = body.get("name");
-        String teacher = body.get("teacher");
+    public Student updateStudent(@PathVariable String username, @RequestParam Map<String, String> param){
+        String name = param.get("name");
+        String teacher = param.get("teacher");
         Student student = studentRepository.findOne(username);
         student.setName(name);
         student.setTeacher(teacher);
