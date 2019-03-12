@@ -35,7 +35,7 @@ public class StudentController {
     }
 
     @PostMapping("/student/search")
-    public List<Student> searchStudentsByNameOrUsername(@RequestParam Map<String, String> param){
+    public List<Student> searchStudentByNameOrUsername(@RequestParam Map<String, String> param){
         String searchTerm = param.get("text");
         return studentRepository.findByNameContainingOrUsernameContaining(searchTerm, searchTerm);
     }
