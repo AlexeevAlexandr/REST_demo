@@ -58,4 +58,19 @@ public class ControllerTeacherTest {
                 .andExpect(jsonPath("$.password").value("abc123"))
                 .andDo(print());
     }
+
+    @Test
+    public void D_updateTeacherTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.put("/teacher/Anton").accept(MediaType.APPLICATION_JSON)
+                .param("password", "123abc"))
+                .andExpect(jsonPath("$.name").value("Anton"))
+                .andExpect(jsonPath("password").value("123abc"))
+                .andDo(print());
+    }
+
+    @Test
+    public void E_deleteTeacherTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/teacher/Anton").accept(MediaType.APPLICATION_JSON))
+                .andDo(print());
+    }
 }
