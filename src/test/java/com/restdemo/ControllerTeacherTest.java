@@ -36,18 +36,26 @@ public class ControllerTeacherTest {
     }
 
     @Test
-    public void getAllTeachersTest() throws Exception {
+    public void A_getAllTeachersTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/teacher").accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$",hasSize(4)))
                 .andDo(print());
     }
 
     @Test
-    public void getTeacherByNameTest() throws Exception {
+    public void B_getTeacherByNameTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/teacher/Jack").accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.name").value("Jack"))
                 .andExpect(jsonPath("$.password").value("123"))
                 .andDo(print());
     }
 
+    @Test
+    public void C_createTeacherTest() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.post("/teacher").contentType(MediaType.APPLICATION_JSON)
+                .param("name","Anton").param("password", "abc123"))
+                .andExpect(jsonPath("$.name").value("Anton"))
+                .andExpect(jsonPath("$.password").value("abc123"))
+                .andDo(print());
+    }
 }

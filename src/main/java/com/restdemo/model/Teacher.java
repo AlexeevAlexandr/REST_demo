@@ -1,9 +1,8 @@
 package com.restdemo.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.springframework.boot.autoconfigure.web.ResourceProperties;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -14,6 +13,7 @@ public class Teacher {
     @Column
     @NotNull
     private String name;
+
     @Column
     @NotNull
     private String password;

@@ -14,9 +14,11 @@ public class Student {
     @Column
     @NotNull
     private String username;
+
     @Column
     @NotNull
     private String name;
+
     @Column
     @NotNull
     private String teacher;
