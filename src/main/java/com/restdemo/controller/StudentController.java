@@ -27,19 +27,37 @@ public class StudentController {
 
     @GetMapping("/student/{username}")
     public Student getStudentByUsername(@PathVariable String username){
-        return studentRepository.findOne(username);
+
+        Student student = studentRepository.findOne(username);
+        if (student == null){
+            throw new ExceptionHandling("Student '" + username + "' not found");
+        }
+
+        return student;
     }
 
     @PostMapping("/student/searchByTeacher")
     public List<Student> getStudentsByTeacher(@RequestParam Map<String, String> param){
         String searchTerm = param.get("teacher");
-        return studentRepository.findByTeacherContaining(searchTerm);
+
+        List<Student> teacher = studentRepository.findByTeacherContaining(searchTerm);
+        if (teacher.get(0) == null){
+            throw new ExceptionHandling("Teacher '" + searchTerm + "' not found");
+        }
+
+        return teacher;
     }
 
     @PostMapping("/student/search")
     public List<Student> searchStudentByNameOrUsername(@RequestParam Map<String, String> param){
         String searchTerm = param.get("text");
-        return studentRepository.findByNameContainingOrUsernameContaining(searchTerm, searchTerm);
+
+        List<Student> student = studentRepository.findByNameContainingOrUsernameContaining(searchTerm, searchTerm);
+        if (student.get(0) == null){
+            throw new ExceptionHandling("Teacher '" + searchTerm + "' not found");
+        }
+
+        return student;
     }
 
     @PostMapping("/student")
@@ -51,7 +69,7 @@ public class StudentController {
 
         Optional<Student> student = studentRepository.findByUsernameContaining(username);
         if (student.isPresent()){
-            throw new ExceptionHandling("Student with username '" + username + "' already exist");
+            throw new ExceptionHandling("Student '" + username + "' already exist");
         }
 
         return studentRepository.save(new Student(username, name, teacher));
@@ -59,6 +77,12 @@ public class StudentController {
 
     @PutMapping("/student/{username}")
     public Student updateStudent(@PathVariable String username, @RequestParam Map<String, String> param){
+
+        Optional<Student> optionalStudent = studentRepository.findByUsernameContaining(username);
+        if ( ! optionalStudent.isPresent()){
+            throw new ExceptionHandling("Student '" + username + "' not found");
+        }
+
         String name = param.get("name");
         String teacher = param.get("teacher");
         Student student = studentRepository.findOne(username);
@@ -69,6 +93,12 @@ public class StudentController {
 
     @DeleteMapping("/student/{username}")
     public boolean deleteStudent(@PathVariable String username){
+
+        Optional<Student> optionalStudent = studentRepository.findByUsernameContaining(username);
+        if ( ! optionalStudent.isPresent()){
+            throw new ExceptionHandling("Student '" + username + "' not found");
+        }
+
         studentRepository.delete(username);
         return true;
     }

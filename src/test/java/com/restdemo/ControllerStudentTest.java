@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.util.NestedServletException;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -52,16 +53,30 @@ public class ControllerStudentTest {
                 .andDo(print());
     }
 
+    @Test(expected = NestedServletException.class)
+    public void C_getStudentByUsernameExceptionHandlingTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/peters").accept(MediaType.APPLICATION_JSON))
+                .andDo(print());
+    }
+
+
     @Test
-    public void C_getStudentsByTeacherTest() throws Exception{
+    public void D_getStudentsByTeacherTest() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.post("/student/searchByTeacher").contentType(MediaType.APPLICATION_JSON)
                 .param("teacher","Jack"))
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andDo(print());
     }
 
+    @Test(expected = NestedServletException.class)
+    public void E_getStudentsByTeacherExceptionHandlerTest() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.post("/student/searchByTeacher").contentType(MediaType.APPLICATION_JSON)
+                .param("teacher","Jackson"))
+                .andDo(print());
+    }
+
     @Test
-    public void D_getStudentsByTeacherTest() throws Exception{
+    public void F_getStudentsByTeacherTest() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.post("/student/searchByTeacher").contentType(MediaType.APPLICATION_JSON)
                 .param("teacher","Daniels"))
                 .andExpect(jsonPath("$", hasSize(3)))
@@ -69,15 +84,22 @@ public class ControllerStudentTest {
     }
 
     @Test
-    public void E_searchStudentByNameOrUsernameTest() throws Exception {
+    public void G_searchStudentByNameOrUsernameTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/student/search").accept(MediaType.APPLICATION_JSON)
                 .param("text", "ann"))
                 .andExpect(content().json("[{'username':'ann','name':'Anna','teacher':'Daniels'}]"))
                 .andDo(print());
     }
 
+    @Test(expected = NestedServletException.class)
+    public void H_searchStudentByNameOrUsernameExceptionHandlerTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/student/search").accept(MediaType.APPLICATION_JSON)
+                .param("text", "tony"))
+                .andDo(print());
+    }
+
     @Test
-    public void F_createStudentTest() throws Exception {
+    public void I_createStudentTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/student").accept(MediaType.APPLICATION_JSON)
                 .param("username", "linda")
                 .param("name", "Linda")
@@ -88,8 +110,18 @@ public class ControllerStudentTest {
                 .andDo(print());
     }
 
+    @Test(expected = NestedServletException.class)
+    public void J_createStudentExceptionTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/student").accept(MediaType.APPLICATION_JSON)
+                .param("username", "linda")
+                .param("name", "Linda")
+                .param("teacher", "Jack"))
+                .andDo(print());
+    }
+
+
     @Test
-    public void G_updateStudentTest() throws Exception {
+    public void K_updateStudentTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.put("/student/linda").accept(MediaType.APPLICATION_JSON)
                 .param("name", "Lindi")
                 .param("teacher", "Daniels"))
@@ -99,9 +131,23 @@ public class ControllerStudentTest {
                 .andDo(print());
     }
 
+    @Test(expected = NestedServletException.class)
+    public void L_updateStudentExceptionHandlingTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.put("/student/villi").accept(MediaType.APPLICATION_JSON)
+                .param("name", "Villi")
+                .param("teacher", "Tomas"))
+                .andDo(print());
+    }
+
     @Test
-    public void H_deleteStudentTest() throws Exception {
+    public void M_deleteStudentTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/student/linda").accept(MediaType.APPLICATION_JSON))
+                .andDo(print());
+    }
+
+    @Test(expected = NestedServletException.class)
+    public void N_deleteStudentExceptionHandlingTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/student/lindy").accept(MediaType.APPLICATION_JSON))
                 .andDo(print());
     }
 }
