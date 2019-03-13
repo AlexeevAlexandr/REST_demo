@@ -1,5 +1,6 @@
 package com.restdemo.controller;
 
+import com.restdemo.exceptionHandling.ExceptionHandling;
 import com.restdemo.model.Student;
 import com.restdemo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class StudentController {
@@ -42,9 +44,16 @@ public class StudentController {
 
     @PostMapping("/student")
     public Student createStudent(@RequestParam Map<String, String> param){
+
         String username = param.get("username");
         String name = param.get("name");
         String teacher = param.get("teacher");
+
+        Optional<Student> student = studentRepository.findByUsernameContaining(username);
+        if ( ! student.isPresent()){
+            throw new ExceptionHandling("Student with username '" + username + "' already exist");
+        }
+
         return studentRepository.save(new Student(username, name, teacher));
     }
 
