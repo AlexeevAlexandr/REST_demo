@@ -1,6 +1,5 @@
 package com.restdemo.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -11,15 +10,12 @@ import javax.validation.constraints.NotNull;
 public class Student {
 
     @Id
-    @Column
     @NotNull
     private String username;
 
-    @Column
     @NotNull
     private String name;
 
-    @Column
     @NotNull
     private String teacher;
 
