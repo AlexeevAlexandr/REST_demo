@@ -50,7 +50,7 @@ public class StudentController {
         String teacher = param.get("teacher");
 
         Optional<Student> student = studentRepository.findByUsernameContaining(username);
-        if ( ! student.isPresent()){
+        if (student.isPresent()){
             throw new ExceptionHandling("Student with username '" + username + "' already exist");
         }
 

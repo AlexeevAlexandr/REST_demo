@@ -45,9 +45,9 @@ public class ControllerStudentTest {
 
     @Test
     public void B_getStudentByUsernameTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/student/piter").accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.username").value("piter"))
-                .andExpect(jsonPath("$.name").value("Piter"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/peter").accept(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.username").value("peter"))
+                .andExpect(jsonPath("$.name").value("Peter"))
                 .andExpect(jsonPath("$.teacher").value("Jack"))
                 .andDo(print());
     }
