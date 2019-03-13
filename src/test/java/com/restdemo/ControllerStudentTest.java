@@ -76,5 +76,17 @@ public class ControllerStudentTest {
                 .andDo(print());
     }
 
+    @Test
+    public void F_createStudentTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/student").accept(MediaType.APPLICATION_JSON)
+                .param("username", "linda")
+                .param("name", "Linda")
+                .param("teacher", "Jack"))
+                .andExpect(jsonPath("$.username").value("linda"))
+                .andExpect(jsonPath("$.name").value("Linda"))
+                .andExpect(jsonPath("$.teacher").value("Jack"))
+                .andDo(print());
+    }
+
 
 }
