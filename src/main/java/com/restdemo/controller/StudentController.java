@@ -41,7 +41,7 @@ public class StudentController {
         String searchTerm = param.get("teacher");
 
         List<Student> teacher = studentRepository.findByTeacherContaining(searchTerm);
-        if (teacher.get(0) == null){
+        if (teacher.isEmpty()){
             throw new ExceptionHandling("Teacher '" + searchTerm + "' not found");
         }
 
@@ -53,7 +53,7 @@ public class StudentController {
         String searchTerm = param.get("text");
 
         List<Student> student = studentRepository.findByNameContainingOrUsernameContaining(searchTerm, searchTerm);
-        if (student.get(0) == null){
+        if (student.isEmpty()){
             throw new ExceptionHandling("Teacher '" + searchTerm + "' not found");
         }
 
