@@ -53,9 +53,12 @@ public class StudentController {
         return studentList;
     }
 
-    @GetMapping("/search{name}")
+    @GetMapping("/search/{name}")
     public List<Student> searchStudentByNameOrUsername(@PathVariable String name){
 
+        if (name.isEmpty()){
+            throw new ExceptionHandling("Name not specified");
+        }
         List<Student> student = studentRepository.findByFirstNameContainingOrLastNameContaining(name, name);
         if (student.isEmpty()){
             throw new ExceptionHandling("Student '" + name + "' not found");
@@ -65,22 +68,19 @@ public class StudentController {
     }
 
     @PostMapping("/create")
-    public Student createStudent(@RequestParam Map<String, String> param){
+    public Student createStudent(@RequestBody Student student){
 
-        String email = param.get("email");
-
-        Student student = studentRepository.findByEmailContaining(email);
-        if (student == null){
-            throw new ExceptionHandling("Student with this email '" + email + "' already exist");
+        if (studentRepository.findByEmailContaining(student.getEmail()) == null){
+            throw new ExceptionHandling("Student with this email '" + student.getEmail() + "' already exist");
         }
 
-        String firstName = param.get("firstName");
-        String lastName = param.get("lastName");
-        String gender = param.get("gender");
-        String ip_address = param.get("ip_address");
-        String teacher = param.get("teacher");
-
-        return studentRepository.save(new Student(firstName, lastName, email, gender, ip_address, teacher));
+        return studentRepository.save(new Student(
+                student.getFirstName(),
+                student.getLastName(),
+                student.getEmail(),
+                student.getGender(),
+                student.getIpAddress(),
+                student.getTeacher()));
     }
 
     @PutMapping("/update")
