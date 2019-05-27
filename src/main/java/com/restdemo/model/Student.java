@@ -9,31 +9,24 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
     @NotNull
-    @Column(name = "first_name")
     private String firstName;
 
     @NotNull
-    @Column(name = "last_name")
     private String lastName;
 
     @NotNull
-    @Column(name = "email")
     private String email;
 
     @NotNull
-    @Column(name = "gender")
     private String gender;
 
     @NotNull
-    @Column(name = "ip_address")
     private String ipAddress;
 
     @NotNull
-    @Column(name = "teacher")
     private String teacher;
 
     public Student(){}
