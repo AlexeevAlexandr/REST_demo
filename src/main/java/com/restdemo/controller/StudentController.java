@@ -81,7 +81,7 @@ public class StudentController {
             throw new ExceptionHandling("Student with this email '" + student.getEmail() + "' already exist");
         }
 
-        return studentRepository.save(new Student(firstName, lastName, email, gender, ipAddress, teacher));
+        return studentRepository.save(student);
     }
 
     @PutMapping("/update")
