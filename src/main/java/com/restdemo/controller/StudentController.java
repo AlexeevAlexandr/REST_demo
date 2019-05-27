@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/student")
+@RequestMapping(value = "/students")
 public class StudentController {
 
     private final StudentRepository studentRepository;
