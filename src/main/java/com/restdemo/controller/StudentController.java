@@ -68,20 +68,13 @@ public class StudentController {
     }
 
     @PostMapping("/create")
-    public Student createStudent(@RequestParam Map<String, String> param){
+    public Student createStudent(@RequestBody Student student){
 
-        String email = param.get("email");
-
-        if (studentRepository.findByEmailContaining(email) != null){
-            throw new ExceptionHandling("Student with this email '" + email + "' already exist");
+        if (studentRepository.findByEmailContaining(student.getEmail()) != null){
+            throw new ExceptionHandling("Student with this email '" + student.getEmail() + "' already exist");
         }
-        String firstName = param.get("firstName");
-        String lastName = param.get("lastName");
-        String gender = param.get("gender");
-        String ip_address = param.get("ip_address");
-        String teacher = param.get("teacher");
 
-        return studentRepository.save(new Student(firstName, lastName, email, gender, ip_address, teacher));
+        return studentRepository.save(student);
     }
 
     @PutMapping("/update")
