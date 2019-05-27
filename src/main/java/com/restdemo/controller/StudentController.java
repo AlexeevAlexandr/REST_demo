@@ -26,8 +26,14 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public Student getStudentByUsername(@PathVariable int id){
-        Student student = studentRepository.findOne(id);
+    public Student getStudentByUsername(@PathVariable String id){
+        Student student;
+
+        try {
+            student = studentRepository.findOne(Integer.parseInt(id));
+        }catch (NumberFormatException e){
+            throw new ExceptionHandling("Incorrect id '" + id + "', id must be integer");
+        }
         if (student == null){
             throw new ExceptionHandling("Student with id '" + id + "' not found");
         }
