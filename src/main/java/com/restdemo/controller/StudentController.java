@@ -37,7 +37,7 @@ public class StudentController {
         return student;
     }
 
-    @PostMapping("/searchByTeacher")
+    @GetMapping("/teacher")
     public List<Student> getStudentsByTeacher(@RequestParam Map<String, String> param){
         String searchTerm = param.get("teacher");
 
@@ -49,7 +49,7 @@ public class StudentController {
         return teacher;
     }
 
-    @PostMapping("/search")
+    @GetMapping("/search")
     public List<Student> searchStudentByNameOrUsername(@RequestParam Map<String, String> param){
         String searchTerm = param.get("text");
 

@@ -26,9 +26,9 @@ public class TeacherController {
         return teacherRepository.findAll();
     }
 
-    @GetMapping("/{name}")
-    public Teacher getTeacherByName(@PathVariable String name){
-
+    @GetMapping("/teacher")
+    public Teacher getTeacherByName(@RequestParam Map<String, String> param){
+        String name = param.get("teacher");
         Teacher teacher = teacherRepository.findOne(name);
         if (teacher == null){
             throw new ExceptionHandling("Teacher '" + name + "' not found");
