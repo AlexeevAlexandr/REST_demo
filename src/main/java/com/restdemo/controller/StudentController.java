@@ -26,9 +26,8 @@ public class StudentController {
         return studentRepository.findAll();
     }
 
-    @GetMapping("/username")
-    public Student getStudentByUsername(@RequestParam Map<String, String> param){
-        String username = param.get("username");
+    @GetMapping("/username/{username}")
+    public Student getStudentByUsername(@PathVariable String username){
         Student student = studentRepository.findOne(username);
         if (student == null){
             throw new ExceptionHandling("Student with username '" + username + "' not found");
