@@ -25,7 +25,7 @@ public class StudentController {
         return studentRepository.findAll();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/id{id}")
     public Student getStudentByUsername(@PathVariable String id){
         Student student;
 
@@ -42,7 +42,7 @@ public class StudentController {
         return student;
     }
 
-    @GetMapping("{teacher}")
+    @GetMapping("teacher{teacher}")
     public List<Student> getStudentsByTeacher(@PathVariable String teacher){
 
         List<Student> studentList = studentRepository.findByTeacherContaining(teacher);
@@ -53,9 +53,8 @@ public class StudentController {
         return studentList;
     }
 
-    @GetMapping("/search")
-    public List<Student> searchStudentByNameOrUsername(@RequestParam Map<String, String> param){
-        String name = param.get("text");
+    @GetMapping("/search{name}")
+    public List<Student> searchStudentByNameOrUsername(@PathVariable String name){
 
         List<Student> student = studentRepository.findByFirstNameContainingOrLastNameContaining(name, name);
         if (student.isEmpty()){
