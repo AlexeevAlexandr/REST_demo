@@ -45,7 +45,7 @@ public class StudentController {
     @GetMapping("/teacher/{teacher}")
     public List<Student> getStudentsByTeacher(@PathVariable String teacher){
 
-        List<Student> studentList = studentRepository.findByTeacherContaining(teacher.toLowerCase());
+        List<Student> studentList = studentRepository.findByTeacherContaining(teacher);
         if (studentList.isEmpty()){
             throw new ExceptionHandling("Teacher '" + teacher + "' not found");
         }
