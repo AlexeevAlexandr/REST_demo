@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@RequestMapping(value = "/teacher")
 public class TeacherController {
 
     private final TeacherRepository teacherRepository;
@@ -20,12 +21,12 @@ public class TeacherController {
         this.teacherRepository = teacherRepository;
     }
 
-    @GetMapping("/teacher")
+    @GetMapping("")
     public List<Teacher> getAllTeachers(){
         return teacherRepository.findAll();
     }
 
-    @GetMapping("/teacher/{name}")
+    @GetMapping("/{name}")
     public Teacher getTeacherByName(@PathVariable String name){
 
         Teacher teacher = teacherRepository.findOne(name);
@@ -36,7 +37,7 @@ public class TeacherController {
         return teacher;
     }
 
-    @PostMapping("/teacher")
+    @PostMapping("")
     public Teacher createTeacher(@RequestParam Map<String, String> param){
         String name = param.get("name");
         String password = param.get("password");
@@ -49,7 +50,7 @@ public class TeacherController {
         return teacherRepository.save(new Teacher(name, password));
     }
 
-    @PutMapping("/teacher/{name}")
+    @PutMapping("/{name}")
     public Teacher updateTeacher(@PathVariable String name, @RequestParam Map<String, String> param){
         String password = param.get("password");
         Teacher teacher = teacherRepository.findOne(name);
@@ -62,7 +63,7 @@ public class TeacherController {
         return teacherRepository.save(teacher);
     }
 
-    @DeleteMapping("/teacher/{name}")
+    @DeleteMapping("/{name}")
     public boolean deleteTeacher(@PathVariable String name){
 
         Optional<Teacher> teacher = teacherRepository.findByNameContaining(name);

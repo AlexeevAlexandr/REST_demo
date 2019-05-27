@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@RequestMapping(value = "/student")
 public class StudentController {
 
     private final StudentRepository studentRepository;
@@ -20,23 +21,23 @@ public class StudentController {
         this.studentRepository = studentRepository;
     }
 
-    @GetMapping("/student")
+    @GetMapping("")
     public List<Student> getAllStudents(){
         return studentRepository.findAll();
     }
 
-    @GetMapping("/student/{username}")
+    @GetMapping("/{username}")
     public Student getStudentByUsername(@PathVariable String username){
 
         Student student = studentRepository.findOne(username);
         if (student == null){
-            throw new ExceptionHandling("Student '" + username + "' not found");
+            throw new ExceptionHandling("Student with username '" + username + "' not found");
         }
 
         return student;
     }
 
-    @PostMapping("/student/searchByTeacher")
+    @PostMapping("/searchByTeacher")
     public List<Student> getStudentsByTeacher(@RequestParam Map<String, String> param){
         String searchTerm = param.get("teacher");
 
@@ -48,19 +49,19 @@ public class StudentController {
         return teacher;
     }
 
-    @PostMapping("/student/search")
+    @PostMapping("/search")
     public List<Student> searchStudentByNameOrUsername(@RequestParam Map<String, String> param){
         String searchTerm = param.get("text");
 
         List<Student> student = studentRepository.findByNameContainingOrUsernameContaining(searchTerm, searchTerm);
         if (student.isEmpty()){
-            throw new ExceptionHandling("Teacher '" + searchTerm + "' not found");
+            throw new ExceptionHandling("Student '" + searchTerm + "' not found");
         }
 
         return student;
     }
 
-    @PostMapping("/student")
+    @PostMapping("")
     public Student createStudent(@RequestParam Map<String, String> param){
 
         String username = param.get("username");
@@ -75,7 +76,7 @@ public class StudentController {
         return studentRepository.save(new Student(username, name, teacher));
     }
 
-    @PutMapping("/student/{username}")
+    @PutMapping("/{username}")
     public Student updateStudent(@PathVariable String username, @RequestParam Map<String, String> param){
 
         Optional<Student> optionalStudent = studentRepository.findByUsernameContaining(username);
@@ -91,7 +92,7 @@ public class StudentController {
         return studentRepository.save(student);
     }
 
-    @DeleteMapping("/student/{username}")
+    @DeleteMapping("/{username}")
     public boolean deleteStudent(@PathVariable String username){
 
         Optional<Student> optionalStudent = studentRepository.findByUsernameContaining(username);
