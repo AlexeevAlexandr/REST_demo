@@ -25,7 +25,7 @@ public class StudentController {
         return studentRepository.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public Student getStudentByUsername(@PathVariable String id){
         Student student;
 
@@ -42,7 +42,7 @@ public class StudentController {
         return student;
     }
 
-    @GetMapping("/{teacher}")
+    @GetMapping("{teacher}")
     public List<Student> getStudentsByTeacher(@PathVariable String teacher){
 
         List<Student> studentList = studentRepository.findByTeacherContaining(teacher);
