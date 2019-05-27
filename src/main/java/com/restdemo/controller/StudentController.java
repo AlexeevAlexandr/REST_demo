@@ -70,7 +70,7 @@ public class StudentController {
     @PostMapping("/create")
     public Student createStudent(@RequestBody Student student){
 
-        if (studentRepository.findByEmailContaining(student.getEmail()) == null){
+        if (studentRepository.findByEmailContaining(student.getEmail()) != null){
             throw new ExceptionHandling("Student with this email '" + student.getEmail() + "' already exist");
         }
 
