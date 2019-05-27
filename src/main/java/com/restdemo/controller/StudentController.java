@@ -46,7 +46,7 @@ public class StudentController {
     public List<Student> getStudentsByTeacher(@PathVariable String teacher){
 
         List<Student> studentList = studentRepository.findByTeacherContaining(teacher);
-        if (teacher.isEmpty()){
+        if (studentList.isEmpty()){
             throw new ExceptionHandling("Teacher '" + teacher + "' not found");
         }
 
