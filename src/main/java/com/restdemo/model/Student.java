@@ -1,8 +1,6 @@
 package com.restdemo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -10,37 +8,91 @@ import javax.validation.constraints.NotNull;
 public class Student {
 
     @Id
-    @NotNull
-    private String username;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
     @NotNull
-    private String name;
+    @Column(name = "first_name")
+    private String firstName;
 
     @NotNull
+    @Column(name = "last_name")
+    private String lastName;
+
+    @NotNull
+    @Column(name = "email")
+    private String email;
+
+    @NotNull
+    @Column(name = "gender")
+    private String gender;
+
+    @NotNull
+    @Column(name = "ip_address")
+    private String ipAddress;
+
+    @NotNull
+    @Column(name = "teacher")
     private String teacher;
 
     public Student(){}
 
-    public Student(String username, String name, String teacher) {
-        this.setUsername(username);
-        this.setName(name);
-        this.setTeacher(teacher);
+    public Student(String firstName, String lastName, String email, String gender, String ipAddress, String teacher) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.gender = gender;
+        this.ipAddress = ipAddress;
+        this.teacher = teacher;
     }
 
-    public String getUsername() {
-        return username;
+    public int getId() {
+        return id;
     }
 
-    private void setUsername(String username) {
-        this.username = username;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String last_name) {
+        this.lastName = last_name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
     }
 
     public String getTeacher() {

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/student")
@@ -26,12 +25,11 @@ public class StudentController {
         return studentRepository.findAll();
     }
 
-    @GetMapping("/username")
-    public Student getStudentByUsername(@RequestParam Map<String, String> param){
-        String username = param.get("username");
-        Student student = studentRepository.findOne(username);
+    @GetMapping("/{id}")
+    public Student getStudentByUsername(@PathVariable int id){
+        Student student = studentRepository.findOne(id);
         if (student == null){
-            throw new ExceptionHandling("Student with username '" + username + "' not found");
+            throw new ExceptionHandling("Student with id '" + id + "' not found");
         }
 
         return student;
@@ -51,56 +49,70 @@ public class StudentController {
 
     @GetMapping("/search")
     public List<Student> searchStudentByNameOrUsername(@RequestParam Map<String, String> param){
-        String searchTerm = param.get("text");
+        String name = param.get("text");
 
-        List<Student> student = studentRepository.findByNameContainingOrUsernameContaining(searchTerm, searchTerm);
+        List<Student> student = studentRepository.findByFirstNameContainingOrLastNameContaining(name, name);
         if (student.isEmpty()){
-            throw new ExceptionHandling("Student '" + searchTerm + "' not found");
+            throw new ExceptionHandling("Student '" + name + "' not found");
         }
 
         return student;
     }
 
-    @PostMapping("")
+    @PostMapping("/create")
     public Student createStudent(@RequestParam Map<String, String> param){
 
-        String username = param.get("username");
-        String name = param.get("name");
-        String teacher = param.get("teacher");
+        String email = param.get("email");
 
-        Optional<Student> student = studentRepository.findByUsernameContaining(username);
-        if (student.isPresent()){
-            throw new ExceptionHandling("Student '" + username + "' already exist");
+        Student student = studentRepository.findByEmailContaining(email);
+        if (student == null){
+            throw new ExceptionHandling("Student with this email '" + email + "' already exist");
         }
 
-        return studentRepository.save(new Student(username, name, teacher));
+        String firstName = param.get("firstName");
+        String lastName = param.get("lastName");
+        String gender = param.get("gender");
+        String ip_address = param.get("ip_address");
+        String teacher = param.get("teacher");
+
+        return studentRepository.save(new Student(firstName, lastName, email, gender, ip_address, teacher));
     }
 
-    @PutMapping("/{username}")
-    public Student updateStudent(@PathVariable String username, @RequestParam Map<String, String> param){
+    @PutMapping("/update")
+    public Student updateStudent(@RequestParam Map<String, String> param){
 
-        Optional<Student> optionalStudent = studentRepository.findByUsernameContaining(username);
-        if ( ! optionalStudent.isPresent()){
-            throw new ExceptionHandling("Student '" + username + "' not found");
+        String email = param.get("email");
+
+        Student student = studentRepository.findByEmailContaining(email);
+        if (student == null){
+            throw new ExceptionHandling("Student with this email '" + email + "' not found");
         }
 
-        String name = param.get("name");
+        String firstName = param.get("firstName");
+        String lastName = param.get("lastName");
+        String gender = param.get("gender");
+        String ip_address = param.get("ip_address");
         String teacher = param.get("teacher");
-        Student student = studentRepository.findOne(username);
-        student.setName(name);
+
+        student.setFirstName(firstName);
+        student.setLastName(lastName);
+        student.setEmail(email);
+        student.setGender(gender);
+        student.setIpAddress(ip_address);
         student.setTeacher(teacher);
+
         return studentRepository.save(student);
     }
 
-    @DeleteMapping("/{username}")
-    public boolean deleteStudent(@PathVariable String username){
+    @DeleteMapping("/{id}")
+    public boolean deleteStudent(@PathVariable int id){
 
-        Optional<Student> optionalStudent = studentRepository.findByUsernameContaining(username);
-        if ( ! optionalStudent.isPresent()){
-            throw new ExceptionHandling("Student '" + username + "' not found");
+        Student student = studentRepository.findOne(id);
+        if (student == null){
+            throw new ExceptionHandling("Student with id '" + id + "' not found");
         }
 
-        studentRepository.delete(username);
+        studentRepository.delete(student);
         return true;
     }
 }
