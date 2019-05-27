@@ -2,7 +2,7 @@ package com.restdemo.exceptionHandling;
 
 public class ExceptionHandling extends RuntimeException {
 
-    public ExceptionHandling(final String exception){
+    public ExceptionHandling(String exception){
         super(exception);
     }
 }
