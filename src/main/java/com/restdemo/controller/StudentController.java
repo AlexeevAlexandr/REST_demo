@@ -34,6 +34,7 @@ public class StudentController {
         }catch (NumberFormatException e){
             throw new ExceptionHandling("Incorrect id '" + id + "', id must be integer");
         }
+
         if (student == null){
             throw new ExceptionHandling("Student with id '" + id + "' not found");
         }
@@ -41,16 +42,15 @@ public class StudentController {
         return student;
     }
 
-    @GetMapping("/teacher")
-    public List<Student> getStudentsByTeacher(@RequestParam Map<String, String> param){
-        String searchTerm = param.get("teacher");
+    @GetMapping("/{teacher}")
+    public List<Student> getStudentsByTeacher(@PathVariable String teacher){
 
-        List<Student> teacher = studentRepository.findByTeacherContaining(searchTerm);
+        List<Student> studentList = studentRepository.findByTeacherContaining(teacher);
         if (teacher.isEmpty()){
-            throw new ExceptionHandling("Teacher '" + searchTerm + "' not found");
+            throw new ExceptionHandling("Teacher '" + teacher + "' not found");
         }
 
-        return teacher;
+        return studentList;
     }
 
     @GetMapping("/search")
