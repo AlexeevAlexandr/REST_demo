@@ -91,6 +91,15 @@ public class StudentController {
             throw new ExceptionHandling("Student with id '" + st.getId() + "' not found");
         }
 
+        String email = st.getEmail();
+        if (studentRepository.findByEmailContaining(email) == null){
+            throw new ExceptionHandling("This email '" + st.getId() + "' already  exist");
+        }
+
+        try {
+            if (email != null || ! email.isEmpty()){ student.setEmail(email); }
+        }catch (Exception ignore){}
+
         try {
             String firstName = st.getFirstName();
             if (firstName != null || ! firstName.isEmpty()){ student.setFirstName(firstName); }
@@ -99,11 +108,6 @@ public class StudentController {
         try {
             String lastName = st.getLastName();
             if (lastName != null || ! lastName.isEmpty()){ student.setLastName(lastName); }
-        }catch (Exception ignore){}
-
-        try {
-            String email = st.getEmail();
-            if (email != null || ! email.isEmpty()){ student.setEmail(email); }
         }catch (Exception ignore){}
 
         try {
