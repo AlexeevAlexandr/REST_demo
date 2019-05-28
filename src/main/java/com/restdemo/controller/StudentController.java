@@ -86,9 +86,9 @@ public class StudentController {
     @PutMapping(value = "/update", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public Student updateStudent(@RequestBody Student st){
 
-        Student student = studentRepository.findByEmailContaining(st.getEmail());
+        Student student = studentRepository.findOne(st.getId());
         if (student == null){
-            throw new ExceptionHandling("Student with this email '" + st.getEmail() + "' not found");
+            throw new ExceptionHandling("Student with id '" + st.getId() + "' not found");
         }
         if (st.getFirstName() != null) { student.setFirstName(st.getFirstName());}
         if (st.getLastName() != null) { student.setLastName(st.getLastName()); }
