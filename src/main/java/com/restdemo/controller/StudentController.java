@@ -8,7 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/students")
@@ -85,32 +84,22 @@ public class StudentController {
     }
 
     @PutMapping(value = "/update", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-    public Student updateStudent(@RequestParam Map<String, String> param){
+    public Student updateStudent(@RequestBody Student st){
 
-        String email = param.get("email");
-
-        Student student = studentRepository.findByEmailContaining(email);
+        Student student = studentRepository.findByEmailContaining(st.getEmail());
         if (student == null){
-            throw new ExceptionHandling("Student with this email '" + email + "' not found");
+            throw new ExceptionHandling("Student with this email '" + st.getEmail() + "' not found");
         }
-
-        String firstName = param.get("firstName");
-        String lastName = param.get("lastName");
-        String gender = param.get("gender");
-        String ip_address = param.get("ip_address");
-        String teacher = param.get("teacher");
-
-        student.setFirstName(firstName);
-        student.setLastName(lastName);
-        student.setEmail(email);
-        student.setGender(gender);
-        student.setIpAddress(ip_address);
-        student.setTeacher(teacher);
-
+        if (st.getFirstName() != null) { student.setFirstName(st.getFirstName());}
+        if (st.getLastName() != null) { student.setLastName(st.getLastName()); }
+        if (st.getFirstName() != null) { student.setEmail(st.getEmail());}
+        if (st.getFirstName() != null) { student.setGender(st.getGender());}
+        if (st.getFirstName() != null) { student.setIpAddress(st.getIpAddress());}
+        if (st.getFirstName() != null) { student.setTeacher(st.getTeacher()); }
         return studentRepository.save(student);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public boolean deleteStudent(@PathVariable int id){
 
         Student student = studentRepository.findOne(id);
