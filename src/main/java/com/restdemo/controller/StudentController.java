@@ -4,6 +4,7 @@ import com.restdemo.exceptionHandling.ExceptionHandling;
 import com.restdemo.model.Student;
 import com.restdemo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,12 +21,12 @@ public class StudentController {
         this.studentRepository = studentRepository;
     }
 
-    @GetMapping("")
+    @GetMapping(value = "", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public List<Student> getAllStudents(){
         return studentRepository.findAll();
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping(value = "/id/{id}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public Student getStudentByUsername(@PathVariable String id){
         Student student;
 
@@ -42,7 +43,7 @@ public class StudentController {
         return student;
     }
 
-    @GetMapping("/teacher/{teacher}")
+    @GetMapping(value = "/teacher/{teacher}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public List<Student> getStudentsByTeacher(@PathVariable String teacher){
 
         List<Student> studentList = studentRepository.findByTeacherContaining(teacher);
@@ -53,7 +54,7 @@ public class StudentController {
         return studentList;
     }
 
-    @GetMapping("/search/{name}")
+    @GetMapping(value = "/search/{name}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public List<Student> searchStudentByNameOrUsername(@PathVariable String name){
 
         if (name.isEmpty()){
@@ -67,7 +68,7 @@ public class StudentController {
         return student;
     }
 
-    @PostMapping("/create")
+    @PostMapping(value = "/create", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public Student createStudent(@RequestBody Student student){
 
         if (studentRepository.findByEmailContaining(student.getEmail()) != null){
@@ -77,7 +78,7 @@ public class StudentController {
         return studentRepository.save(student);
     }
 
-    @PutMapping("/update")
+    @PutMapping(value = "/update", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public Student updateStudent(@RequestParam Map<String, String> param){
 
         String email = param.get("email");
