@@ -90,14 +90,37 @@ public class StudentController {
         if (student == null){
             throw new ExceptionHandling("Student with id '" + st.getId() + "' not found");
         }
+
         try {
-            student.setFirstName(st.getFirstName());
-        }catch (Exception ignored){}
-        if ( ! st.getLastName().isEmpty()) { student.setLastName(st.getLastName()); }
-        if ( ! st.getFirstName().isEmpty()) { student.setEmail(st.getEmail());}
-        if ( ! st.getFirstName().isEmpty()) { student.setGender(st.getGender());}
-        if ( ! st.getFirstName().isEmpty()) { student.setIpAddress(st.getIpAddress());}
-        if ( ! st.getFirstName().isEmpty()) { student.setTeacher(st.getTeacher()); }
+            String firstName = st.getFirstName();
+            if (firstName != null || ! firstName.isEmpty()){ student.setFirstName(firstName); }
+        }catch (Exception ignore){}
+
+        try {
+            String lastName = st.getLastName();
+            if (lastName != null || ! lastName.isEmpty()){ student.setLastName(lastName); }
+        }catch (Exception ignore){}
+
+        try {
+            String email = st.getEmail();
+            if (email != null || ! email.isEmpty()){ student.setEmail(email); }
+        }catch (Exception ignore){}
+
+        try {
+            String gender = st.getGender();
+            if (gender != null || ! gender.isEmpty()){ student.setGender(gender); }
+        }catch (Exception ignore){}
+
+        try {
+            String ipAddress = st.getIpAddress();
+            if (ipAddress != null || ! ipAddress.isEmpty()){ student.setIpAddress(ipAddress); }
+        }catch (Exception ignore){}
+
+        try {
+            String teacher = st.getTeacher();
+            if (teacher != null || ! teacher.isEmpty()){ student.setTeacher(teacher); }
+        }catch (Exception ignore){}
+
         return studentRepository.save(student);
     }
 

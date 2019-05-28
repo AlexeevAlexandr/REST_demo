@@ -37,7 +37,7 @@ public class TeacherController {
         return teacher;
     }
 
-    @PostMapping("")
+    @PostMapping("/create")
     public Teacher createTeacher(@RequestParam Map<String, String> param){
         String name = param.get("name");
         String password = param.get("password");
@@ -50,11 +50,12 @@ public class TeacherController {
         return teacherRepository.save(new Teacher(name, password));
     }
 
-    @PutMapping("/{name}")
-    public Teacher updateTeacher(@PathVariable String name, @RequestParam Map<String, String> param){
+    @PutMapping("/update")
+    public Teacher updateTeacher(@RequestParam Map<String, String> param){
+        String name = param.get("name");
         String password = param.get("password");
-        Teacher teacher = teacherRepository.findOne(name);
 
+        Teacher teacher = teacherRepository.findOne(name);
         if (teacher == null){
             throw new ExceptionHandling("Teacher '" + name + "' not found");
         }
@@ -63,7 +64,7 @@ public class TeacherController {
         return teacherRepository.save(teacher);
     }
 
-    @DeleteMapping("/{name}")
+    @DeleteMapping("/delete/{name}")
     public boolean deleteTeacher(@PathVariable String name){
 
         Optional<Teacher> teacher = teacherRepository.findByNameContaining(name);
