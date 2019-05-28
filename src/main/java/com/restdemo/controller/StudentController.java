@@ -90,7 +90,7 @@ public class StudentController {
         if (student == null){
             throw new ExceptionHandling("Student with id '" + st.getId() + "' not found");
         }
-        if ( ! st.getFirstName().isEmpty()) { student.setFirstName(st.getFirstName());}
+        if ( ! st.getFirstName().isEmpty() || st.getFirstName() != null) { student.setFirstName(st.getFirstName());}
         if ( ! st.getLastName().isEmpty()) { student.setLastName(st.getLastName()); }
         if ( ! st.getFirstName().isEmpty()) { student.setEmail(st.getEmail());}
         if ( ! st.getFirstName().isEmpty()) { student.setGender(st.getGender());}
