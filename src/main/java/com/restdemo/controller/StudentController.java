@@ -75,7 +75,13 @@ public class StudentController {
             throw new ExceptionHandling("Student with this email '" + student.getEmail() + "' already exist");
         }
 
-        return studentRepository.save(student);
+        return studentRepository.save(new Student(
+                student.getFirstName(),
+                student.getLastName(),
+                student.getEmail(),
+                student.getGender(),
+                student.getIpAddress(),
+                student.getTeacher()));
     }
 
     @PutMapping(value = "/update", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
