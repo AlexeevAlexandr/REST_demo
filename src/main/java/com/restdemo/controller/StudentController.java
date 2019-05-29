@@ -71,7 +71,7 @@ public class StudentController {
     public Student createStudent(@RequestBody Student student){
 
         if (studentRepository.findByEmailContaining(student.getEmail()) != null){
-            throw new ExceptionHandling("Student with this email '" + student.getEmail() + "' already exist");
+            throw new ExceptionHandling("Student with email '" + student.getEmail() + "' already exist");
         }
 
         return studentRepository.save(new Student(

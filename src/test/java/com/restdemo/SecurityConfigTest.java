@@ -22,14 +22,14 @@ public class SecurityConfigTest {
     @Test
     public void shouldBeStatus_200() {
         ResponseEntity<String> result = template.withBasicAuth("Jack", "123")
-                .getForEntity("/student", String.class);
+                .getForEntity("/students", String.class);
         assertEquals(HttpStatus.OK, result.getStatusCode());
     }
 
     @Test
     public void shouldBeStatus_401() {
         ResponseEntity<String> result = template.withBasicAuth("Mike", "abc")
-                .getForEntity("/student", String.class);
+                .getForEntity("/students", String.class);
         assertEquals(HttpStatus.UNAUTHORIZED, result.getStatusCode());
     }
 }
