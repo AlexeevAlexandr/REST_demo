@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.util.NestedServletException;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -101,8 +100,8 @@ public class ControllerTeacherTest {
                 .andDo(print());
     }
 
-    @Test(expected = NestedServletException.class)
-    public void H_deleteTeacherExceptionHandlingTest() throws Exception {
+    @Test()
+    public void M_deleteTeacherExceptionHandlingTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/teacher/Antonio").accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andDo(print());
