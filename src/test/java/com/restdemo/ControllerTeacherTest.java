@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.util.NestedServletException;
@@ -51,9 +52,10 @@ public class ControllerTeacherTest {
                 .andDo(print());
     }
 
-    @Test(expected = NestedServletException.class)
+    @Test()
     public void C_getTeacherByNameExceptionHandlerTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/teacher/Jackson").accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andDo(print());
     }
 
@@ -66,26 +68,30 @@ public class ControllerTeacherTest {
                 .andDo(print());
     }
 
-    @Test(expected = NestedServletException.class)
+    @Test()
     public void E_createTeacherExceptionHandlingTest() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.post("/teacher").contentType(MediaType.APPLICATION_JSON)
                 .param("name","Anton").param("password", "abc123"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andDo(print());
     }
 
     @Test
     public void F_updateTeacherTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put("/teacher/Anton").accept(MediaType.APPLICATION_JSON)
+        mockMvc.perform(MockMvcRequestBuilders.put("/teacher").accept(MediaType.APPLICATION_JSON)
+                .param("name", "Anton")
                 .param("password", "123abc"))
                 .andExpect(jsonPath("$.name").value("Anton"))
                 .andExpect(jsonPath("password").value("123abc"))
                 .andDo(print());
     }
 
-    @Test(expected = NestedServletException.class)
+    @Test()
     public void G_updateTeacherExceptionHandlingTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put("/teacher/Antonio").accept(MediaType.APPLICATION_JSON)
+        mockMvc.perform(MockMvcRequestBuilders.put("/teacher").accept(MediaType.APPLICATION_JSON)
+                .param("name", "Antonio")
                 .param("password", "123abc"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andDo(print());
     }
 
@@ -98,6 +104,7 @@ public class ControllerTeacherTest {
     @Test(expected = NestedServletException.class)
     public void H_deleteTeacherExceptionHandlingTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/teacher/Antonio").accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andDo(print());
     }
 }
